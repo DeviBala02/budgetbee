@@ -1,0 +1,26 @@
+package com.budgetbee.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Entity 
+@Table(name = "savings_goals")
+@Getter 
+@Setter 
+@NoArgsConstructor
+public class SavingsGoal {
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false) 
+    @JoinColumn(name = "user_id")
+    private AppUser user;
+    @Column(nullable = false) private String name;
+    @Column(nullable = false, precision = 12, scale = 2) 
+    private BigDecimal targetAmount;
+    @Column(nullable = false, precision = 12, scale = 2) 
+    private BigDecimal savedAmount = BigDecimal.ZERO;
+    private LocalDate deadline;
+}
